@@ -1,4 +1,5 @@
 from bitnob.base import Bitnob
+from .body_checks import User
 
 
 class Customer(Bitnob): 

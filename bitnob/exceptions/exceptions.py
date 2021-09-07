@@ -43,7 +43,7 @@ class QueryError(Exception):
 class RateLimitError(Exception):
     def __init__(self, *args):
         self.message = args[0]
-        self.code = 404
+        self.code = 429
 
     @property
     def response(self):
