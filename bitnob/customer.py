@@ -1,4 +1,4 @@
-from bitnob.base import Bitnob
+from bitnob.base import Bitnob, pagination_filter
 
 
 class Customer(Bitnob): 
@@ -16,9 +16,12 @@ class Customer(Bitnob):
 
         - POST Request
         """
+        required_param = ["email", "firstName", "lastName", "phone", "countryCode"]
+        self.check_required_params(required_param, body)
+        
         return self.send_request("POST", "/customers", json=body)
 
-    def list_customers(self, order=None, page=None, take=None):
+    def list_customers(self, **kwargs):
         """
         Listing all transactions
 
@@ -28,8 +31,10 @@ class Customer(Bitnob):
         
         - GET Request
         """
-        response = self.send_request("POST", "/customers")
-        return response.json()
+        url_params = None
+        if kwargs != {}:
+            url_params = pagination_filter(kwargs=kwargs)
+        return self.send_request("GET", f"/customers/?{url_params}")
     
     def get_customer(self, customer_id):
         """

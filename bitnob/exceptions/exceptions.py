@@ -1,4 +1,4 @@
-class EnvVarsNotSet(Exception):
+class BitnobBadKeyError(Exception):
     """Exception raised for errors in the input salary.
 
     Attributes:
@@ -10,37 +10,37 @@ class EnvVarsNotSet(Exception):
         self.message = "API Key or Base URL is not set"
         super().__init__(self.message)
 
-class ServerError(Exception):
+class BitnobServerError(Exception):
     def __init__(self, *args):
         self.message = args[0]
         self.code = 500
 
     @property
     def response(self):
-        return {"status": "error", "name": "ServerError", "code": self.code, "message": self.message}
+        return {"status": "error", "name": "BitnobServerError", "code": self.code, "message": self.message}
 
 
-class UnauthorizedError(Exception):
+class BitnobUnauthorizedError(Exception):
     def __init__(self, *args):
         self.message = args[0]
         self.code = 401
 
     @property
     def response(self):
-        return {"status": "error", "name": "UnauthorizedError", "code": self.code, "message": self.message}
+        return {"status": "error", "name": "BitnobUnauthorizedError", "code": self.code, "message": self.message}
 
 
-class QueryError(Exception):
+class BitnobQueryError(Exception):
     def __init__(self, *args):
         self.message = args[0]
         self.code = 404
 
     @property
     def response(self):
-        return {"status": "error", "name": "QueryError", "code": self.code, "message": self.message}
+        return {"status": "error", "name": "BitnobQueryError", "code": self.code, "message": self.message}
 
 
-class RateLimitError(Exception):
+class BitnobRateLimitError(Exception):
     def __init__(self, *args):
         self.message = args[0]
         self.code = 429
@@ -50,11 +50,15 @@ class RateLimitError(Exception):
         return {"status": "error", "name": "P2PError", "code": self.code, "message": self.message}
 
 
-class BadRequestError(Exception):
+class BitnobBadRequestError(Exception):
     def __init__(self, *args):
         self.message = args[0]
         self.code = 400
 
     @property
     def response(self):
-        return {"status": "error", "name": "BadRequestError", "code": self.code, "message": self.message}
+        return {"status": "error", "name": "BitnobBadRequestError", "code": self.code, "message": self.message}
+
+class BitnobRequiredParamError(Exception):
+    def __init__(self, message):
+        super().__init__(message)

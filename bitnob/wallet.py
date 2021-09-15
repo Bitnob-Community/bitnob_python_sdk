@@ -1,9 +1,8 @@
-from bitnob.base import Bitnob
+from bitnob.base import Bitnob, pagination_filter
 
 
 class Wallet(Bitnob): 
-    
-    def wallet_details(self, body:dict):
+    def wallet_detail(self, body:dict):
         """
         Retrive company wallet details
 
@@ -19,7 +18,7 @@ class Wallet(Bitnob):
         """
         return self.send_request("GET", f"/transactions/{transaction_id}")
     
-    def list_transactions(self, order=None, page=None, take=None):
+    def list_transactions(self, **kwargs):
         """
         Listing all transactions
 
@@ -29,4 +28,7 @@ class Wallet(Bitnob):
         
         - GET Request
         """
-        return self.send_request("GET", "/transactions/?order=ASC&page=2&take=10")
+        url_params = None
+        if kwargs != {}:
+            url_params = pagination_filter(kwargs=kwargs)
+        return self.send_request("GET", f"/transactions/?{url_params}")

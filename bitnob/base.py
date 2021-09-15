@@ -1,7 +1,7 @@
 import os
 import requests
 from requests.exceptions import HTTPError, ConnectionError
-from .exceptions import exception_class, EnvVarsNotSet
+from .exceptions import exception_class, BitnobBadKeyError, BitnobRequiredParamError
 
 
 class Bitnob:
@@ -10,14 +10,18 @@ class Bitnob:
     """
 
     def __init__(self):
-        pass
+        self.BITNOB_LIVE_URL = 'https://api.bitnob.co/api/v1'
+        self.BITNOB_SANDBOX_URL = 'https://sandboxapi.bitnob.co/api/v1'
 
     def env_key_handler(self):
-        self.api_key = os.environ.get("api_key")
-        # self.base_url = "https://sandboxapp.bitnob.co/api/v1"
-        self.base_url = os.environ.get("base_url")
-        if self.api_key is None or self.base_url is None:
-            raise EnvVarsNotSet()
+        self.api_key = os.environ.get("BITNOB_API_KEY")
+        self.production = os.environ.get("BITNOB_PRODUCTION")
+        if self.api_key is None:
+            raise BitnobBadKeyError()
+        if self.production is None or self.production == True:
+            self.base_url = self.BITNOB_LIVE_URL
+        else:
+            self.base_url = self.BITNOB_SANDBOX_URL
 
     def send_request(self, method, path, **kwargs):
         """
@@ -45,9 +49,20 @@ class Bitnob:
             data = response.json()
             try:
                 data["statusCode"]
-                error = exception_class.get(data["statusCode"])
-                return error(data["message"])
+                exception = exception_class.get(data["statusCode"])
+                raise exception(data["message"])
             except KeyError:
                 return data
         except (HTTPError, ConnectionError) as e:
             return e
+    
+    def check_required_params(self, required_param, passed_param):
+        for key in passed_param.keys():
+            if key not in required_param:
+                added_message = "The following are required " + ",".join(required_param)
+                raise BitnobRequiredParamError(f'{key} is required!' + added_message)
+                
+
+def pagination_filter(**kwargs):
+    return "&".join([f"{k}={v}" for k, v in kwargs.items()])
+        

@@ -1,4 +1,4 @@
-from bitnob.base import Bitnob
+from bitnob.base import Bitnob, pagination_filter
 
 
 class Onchain(Bitnob): 
@@ -17,6 +17,9 @@ class Onchain(Bitnob):
 
         - POST Request
         """
+        required_param = ["satoshis", "address", "private", "description", "priorityLevel", "customerEmail"]
+        self.check_required_params(required_param, body)
+
         return self.send_request("POST", "/wallets/send_bitcoin", json=body)
 
     def generate_address(self, body:dict):
@@ -30,12 +33,18 @@ class Onchain(Bitnob):
 
         - POST Request
         """
+        required_param = ["description", "tokens", "private", "is_including_private_channels", "is_fallback_included", "customerEmail"]
+        self.check_required_params(required_param, body)
+
         return self.send_request("POST", "/addresses/generate", json=body)
     
-    def list_addresses(self, body:dict):
+    def list_addresses(self, **kwargs):
         """
         Getting addresses attached to company
 
         - POST Request
         """
-        return self.send_request("POST", "/addresses/generate", json=body)
+        url_params = None
+        if kwargs != {}:
+            url_params = pagination_filter(kwargs=kwargs)
+        return self.send_request("POST", f"/addresses/?{url_params}",)
