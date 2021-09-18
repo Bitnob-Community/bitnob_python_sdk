@@ -124,4 +124,4 @@ Bug reports and pull requests are welcome on GitHub at [https://github.com/bitno
 
 ## License
 
-The gem is available as open source under the terms of the [BSD License](https://opensource.org/licenses/BSD-3-Clause)
+The package is available as open source under the terms of the [BSD License](https://opensource.org/licenses/BSD-3-Clause)
