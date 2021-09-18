@@ -33,7 +33,7 @@ class Onchain(Bitnob):
 
         - POST Request
         """
-        required_param = ["description", "tokens", "private", "is_including_private_channels", "is_fallback_included", "customerEmail"]
+        required_param = ["label", "customerEmail"]
         self.check_required_params(required_param, body)
 
         return self.send_request("POST", "/addresses/generate", json=body)
