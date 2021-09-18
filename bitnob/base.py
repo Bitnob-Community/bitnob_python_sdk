@@ -57,6 +57,9 @@ class Bitnob:
             return e
     
     def check_required_params(self, required_param, passed_param):
+        """
+        function to check required params 
+        """
         for key in required_param:
             if key not in passed_param.keys():
                 added_message = "The following are required: " + ",".join(required_param)
