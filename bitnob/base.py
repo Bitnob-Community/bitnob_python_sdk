@@ -57,10 +57,11 @@ class Bitnob:
             return e
     
     def check_required_params(self, required_param, passed_param):
-        for key in passed_param.keys():
-            if key not in required_param:
-                added_message = "The following are required " + ",".join(required_param)
-                raise BitnobRequiredParamError(f'{key} is required!' + added_message)
+        for key in required_param:
+            if key not in passed_param.keys():
+                added_message = "The following are required: " + ",".join(required_param)
+                message = f'{key} is required! ' + added_message
+                raise BitnobRequiredParamError(message)
                 
 
 def pagination_filter(**kwargs):
