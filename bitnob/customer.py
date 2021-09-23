@@ -16,8 +16,8 @@ class Customer(Bitnob):
 
         - POST Request
         """
-        required_param = ["email", "firstName", "lastName", "phone", "countryCode"]
-        self.check_required_params(required_param, body)
+        required_data = ["email", "firstName", "lastName", "phone", "countryCode"]
+        self.check_required_datas(required_data, body)
         
         return self.send_request("POST", "/customers", json=body)
 
@@ -53,7 +53,6 @@ class Customer(Bitnob):
         """
         body = {"email": email}
         return self.send_request("POST", "/customers/fetch_customer", json=body)
-
     
     def update_customer(self, body:dict, customer_id):
         """

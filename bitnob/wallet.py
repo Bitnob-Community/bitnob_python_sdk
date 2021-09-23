@@ -2,7 +2,7 @@ from bitnob.base import Bitnob, pagination_filter
 
 
 class Wallet(Bitnob): 
-    def wallet_detail(self, body:dict):
+    def wallet_detail(self):
         """
         Retrive company wallet details
 

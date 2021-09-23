@@ -7,7 +7,7 @@ class BitnobBadKeyError(Exception):
     """
 
     def __init__(self):
-        self.message = "API Key or Base URL is not set"
+        self.message = "API Key is not set"
         super().__init__(self.message)
 
 class BitnobServerError(Exception):

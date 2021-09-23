@@ -15,16 +15,18 @@ class Onchain(Bitnob):
             "priorityLevel": "high"
         }
 
+        required_data = "satoshis", "address", "customerEmail"
+
         - POST Request
         """
-        required_param = ["satoshis", "address", "private", "description", "priorityLevel", "customerEmail"]
-        self.check_required_params(required_param, body)
+        required_data = ["satoshis", "address", "customerEmail"]
+        self.check_required_datas(required_data, body)
 
         return self.send_request("POST", "/wallets/send_bitcoin", json=body)
 
     def generate_address(self, body:dict):
         """
-        Creating lightning invoice for customer
+        Generate Address for Customer
 
         body = {
             "label": "purchase xbox",
@@ -33,8 +35,8 @@ class Onchain(Bitnob):
 
         - POST Request
         """
-        required_param = ["label", "customerEmail"]
-        self.check_required_params(required_param, body)
+        required_data = ["label", "customerEmail"]
+        self.check_required_datas(required_data, body)
 
         return self.send_request("POST", "/addresses/generate", json=body)
     

@@ -1,6 +1,11 @@
 import os
+import hmac
+import secrets
 import requests
+
+from hashlib import sha512
 from requests.exceptions import HTTPError, ConnectionError
+
 from .exceptions import exception_class, BitnobBadKeyError, BitnobRequiredParamError
 
 
@@ -12,8 +17,6 @@ class Bitnob:
     def __init__(self):
         self.BITNOB_LIVE_URL = 'https://api.bitnob.co/api/v1'
         self.BITNOB_SANDBOX_URL = 'https://sandboxapi.bitnob.co/api/v1'
-
-    def env_key_handler(self):
         self.api_key = os.environ.get("BITNOB_API_KEY")
         self.production = os.environ.get("BITNOB_PRODUCTION")
         if self.api_key is None:
@@ -31,7 +34,6 @@ class Bitnob:
         :param kwargs:
         :return:
         """
-        self.env_key_handler()
         options = {
             "GET": requests.get,
             "POST": requests.post,
@@ -56,17 +58,26 @@ class Bitnob:
         except (HTTPError, ConnectionError) as e:
             return e
     
-    def check_required_params(self, required_param, passed_param):
+    def check_required_datas(self, required_data, passed_param):
         """
         function to check required params 
         """
-        for key in required_param:
+        for key in required_data:
             if key not in passed_param.keys():
-                added_message = "The following are required: " + ",".join(required_param)
+                added_message = "The following are required: " + ",".join(required_data)
                 message = f'{key} is required! ' + added_message
                 raise BitnobRequiredParamError(message)
                 
 
 def pagination_filter(**kwargs):
     return "&".join([f"{k}={v}" for k, v in kwargs.items()])
+
+def webhook_authenication(request):
+    """Validate signed requests."""
+    api_signature = request.headers.get("x-bitnob-signature")
+    secret = os.environ.get("BITNOB_WEBHOOK_SECRET")
+    computed_sig = hmac.new(
+        key=secret.encode("utf-8"), msg=request.body, digestmod=sha512
+    ).hexdigest()
+    return computed_sig == api_signature
         

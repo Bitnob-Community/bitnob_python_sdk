@@ -16,10 +16,12 @@ class Lightning(Bitnob):
             "customerEmail": "customer@gmail.com"
         }
 
+        required_data = "description", "tokens", "customerEmail"
+
         - POST Request
         """
-        required_param = ["description", "tokens", "private", "is_including_private_channels", "is_fallback_included", "customerEmail"]
-        self.check_required_params(required_param, body)
+        required_data = ["description", "tokens", "customerEmail"]
+        self.check_required_datas(required_data, body)
 
         return self.send_request("POST", "/wallets/ln/createinvoice", json=body)
 
@@ -32,18 +34,20 @@ class Lightning(Bitnob):
             "reference": "reference"
         }
 
+        required_data = "request", "reference"
+
         - POST Request
         """
-        required_param = ["request", "reference"]
-        self.check_required_params(required_param, body)
+        required_data = ["request", "reference"]
+        self.check_required_datas(required_data, body)
 
         return self.send_request("POST", "/wallets/ln/pay", json=body)
     
     def initiate_payment(self, invoice_request):
         """
-        Creating lightning invoice for customer
+        Initiate payment on lighting network.
 
-        "request": "lntb10u1pssrea6pp5rdmqtcxdl69syel7xal4ajmaq6phtd23ujnzdzqwv68p4mprhajqdpsd4hkueteypehgmmswvsxummwwdjkuum9yphkugrnw4hxgctecqzpgxqr23sfppqh4rqy3muaufpmzcfyhpqy8ase4gjsmvtsp5c5nghldmj8k0q8fl4l3eyvga95905g4f8kzwah6pts2kr2l3f03s9qyyssqj5lz3wlas54kfh2dhnk3d5xz5j8d2t4ym963kc29gfh3dketwscsq0y07ypsylk50yj0jx284764vtkwlnpx2czerks7t6mry4h0axcpmazk8l"
+        invoice_request = "lntb10u1psny337pp5km35drx473py8ucup33k0qhrql0ll7cg528c9999eyssp8l0l7xsdpsd4hkueteypehgmmswvsxummwwdjkuum9yphkugrnw4hxgctecqzpgxqr23sfppq00dkh7zckw5d7xgzkk0tctcamlzu6fnrsp53d3kuz79s7akxj9hx0ucnd5fzpd5dlsmwxu7dcja0ksqguqkkm7q9qyyssqyr0lgw260u7pqyjfuwp4azszhugt9m353c9vfq36qltxnqe40qm3dxz4vrqxjyp0utyhvr3p3rrvjpuc0jfts3yd0y02ckqhnx9zp8gpzrazdt"
 
         - POST Request
         """
@@ -53,9 +57,9 @@ class Lightning(Bitnob):
     
     def decode_payment_request(self, invoice_request):
         """
-        Creating lightning invoice for customer
+        Decode Payment Request
 
-        "request": "lntb10u1psny337pp5km35drx473py8ucup33k0qhrql0ll7cg528c9999eyssp8l0l7xsdpsd4hkueteypehgmmswvsxummwwdjkuum9yphkugrnw4hxgctecqzpgxqr23sfppq00dkh7zckw5d7xgzkk0tctcamlzu6fnrsp53d3kuz79s7akxj9hx0ucnd5fzpd5dlsmwxu7dcja0ksqguqkkm7q9qyyssqyr0lgw260u7pqyjfuwp4azszhugt9m353c9vfq36qltxnqe40qm3dxz4vrqxjyp0utyhvr3p3rrvjpuc0jfts3yd0y02ckqhnx9zp8gpzrazdt"
+        invoice_request = "lntb10u1psny337pp5km35drx473py8ucup33k0qhrql0ll7cg528c9999eyssp8l0l7xsdpsd4hkueteypehgmmswvsxummwwdjkuum9yphkugrnw4hxgctecqzpgxqr23sfppq00dkh7zckw5d7xgzkk0tctcamlzu6fnrsp53d3kuz79s7akxj9hx0ucnd5fzpd5dlsmwxu7dcja0ksqguqkkm7q9qyyssqyr0lgw260u7pqyjfuwp4azszhugt9m353c9vfq36qltxnqe40qm3dxz4vrqxjyp0utyhvr3p3rrvjpuc0jfts3yd0y02ckqhnx9zp8gpzrazdt"
 
         - POST Request
         """
@@ -65,7 +69,7 @@ class Lightning(Bitnob):
     def get_invoice(self, invoice_id):
         """
         Getting lightning invoice
-        id = "1b7605e0cdfe8b0267fe377f5ecb7d068375b551e4a626880e668e1aec23bf64"
+        invoice_id = "1b7605e0cdfe8b0267fe377f5ecb7d068375b551e4a626880e668e1aec23bf64"
 
         - POST Request
         """
