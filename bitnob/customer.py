@@ -23,7 +23,7 @@ class Customer(Bitnob):
 
     def list_customers(self, **kwargs):
         """
-        Listing all transactions
+        Listing all customer
 
         order = (optional) Result order. Accepted values: `DESC` (default), ASC
         page = (optional) Result page.
