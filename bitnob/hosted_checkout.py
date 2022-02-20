@@ -12,8 +12,8 @@ class HostedCheckout(Bitnob):
             description: "description"
             customerEmail: "customer@gmail.com",
             notificationEmail: "CustomerfirstName",
-            callbackUrl: "CustomerlastName",
-            successUrl: "9xxxxxxxx",
+            callbackUrl: "htpps://domain.com/callbackUrl",
+            successUrl: "htpps://domain.com/successUrl",
             reference: "reference"
         }
 
@@ -36,7 +36,7 @@ class HostedCheckout(Bitnob):
         """
         url_params = None
         if kwargs != {}:
-            url_params = pagination_filter(kwargs=kwargs)
+            url_params = pagination_filter(**kwargs)
         return self.send_request("GET", f"/checkout/?{url_params}")
     
     def get_checkout_status(self, checkout_id):

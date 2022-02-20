@@ -35,7 +35,7 @@ class Onchain(Bitnob):
 
         - POST Request
         """
-        required_data = ["label", "customerEmail"]
+        required_data = ["customerEmail"]
         self.check_required_datas(required_data, body)
 
         return self.send_request("POST", "/addresses/generate", json=body)
@@ -48,5 +48,8 @@ class Onchain(Bitnob):
         """
         url_params = None
         if kwargs != {}:
-            url_params = pagination_filter(kwargs=kwargs)
-        return self.send_request("POST", f"/addresses/?{url_params}",)
+            url_params = pagination_filter(**kwargs)
+        return self.send_request("GET", f"/addresses/?{url_params}",)
+    
+    def get_recommeded_btc_fes(self):
+        return self.send_request("GET", "/recommended-fees/btc")

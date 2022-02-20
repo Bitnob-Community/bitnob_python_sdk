@@ -1,7 +1,30 @@
-from bitnob.base import Bitnob, pagination_filter
+import sys
+import os
 
+# SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-class Customer(Bitnob): 
+from .base import Bitnob, pagination_filter
+
+class Customer:
+    def __init__(self, id, email, firstName, lastName, countryCode, phone) -> None:
+        self.id = id
+        self.email = email
+        self.firstName = firstName
+        self.lastName = lastName
+        self.countryCode = countryCode
+        self.phone = phone
+
+class CustomerApi(Bitnob): 
+
+    def generate_customer_object(data):
+        return Customer(id=data["id"], 
+                        email=data["email"], 
+                        firstName=data["firstName"], 
+                        lastName=data["lastName"], 
+                        countryCode=data["countryCode"], 
+                        phone=data["phone"]
+                )
     
     def create_customer(self, body:dict):
         """
@@ -19,7 +42,10 @@ class Customer(Bitnob):
         required_data = ["email", "firstName", "lastName", "phone", "countryCode"]
         self.check_required_datas(required_data, body)
         
-        return self.send_request("POST", "/customers", json=body)
+        response = self.send_request("POST", "/customers", json=body)
+        return self.generate_customer_object(data=response.get("data"))
+
+
 
     def list_customers(self, **kwargs):
         """
@@ -34,7 +60,10 @@ class Customer(Bitnob):
         url_params = None
         if kwargs != {}:
             url_params = pagination_filter(kwargs=kwargs)
-        return self.send_request("GET", f"/customers/?{url_params}")
+        response = self.send_request("GET", f"/customers/?{url_params}")
+        data = response.get("data")
+        return [self.generate_customer_object(customer_data) for customer_data in data]
+
     
     def get_customer(self, customer_id):
         """
@@ -42,7 +71,8 @@ class Customer(Bitnob):
 
         - GET Request
         """
-        return self.send_request("GET", f"/customers/{customer_id}")
+        response =  self.send_request("GET", f"/customers/{customer_id}")
+        return self.generate_customer_object(data=response.get("data"))
     
     def get_customer_by_email(self, email):
         """
@@ -52,7 +82,8 @@ class Customer(Bitnob):
         - POST Request
         """
         body = {"email": email}
-        return self.send_request("POST", "/customers/fetch_customer", json=body)
+        response =  self.send_request("POST", "/customers/fetch_customer", json=body)
+        return self.generate_customer_object(data=response.get("data"))
     
     def update_customer(self, body:dict, customer_id):
         """
@@ -67,4 +98,5 @@ class Customer(Bitnob):
 
         - PUT Request
         """
-        return self.send_request("PUT", f"/customers/{customer_id}", json=body)
+        response =  self.send_request("PUT", f"/customers/{customer_id}", json=body)
+        return self.generate_customer_object(data=response.get("data"))

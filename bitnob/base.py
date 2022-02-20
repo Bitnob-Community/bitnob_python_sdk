@@ -9,22 +9,23 @@ from requests.exceptions import HTTPError, ConnectionError
 from .exceptions import exception_class, BitnobBadKeyError, BitnobRequiredParamError
 
 
-class Bitnob:
+class Bitnob():
     """
     Base Bitnob class
     """
 
     def __init__(self):
         self.BITNOB_LIVE_URL = 'https://api.bitnob.co/api/v1'
-        self.BITNOB_SANDBOX_URL = 'https://sandboxapi.bitnob.co/api/v1'
+        self.BITNOB_SANDBOX_URL = 'https://staging-api.flowertop.xyz/api/v1'
         self.api_key = os.environ.get("BITNOB_API_KEY")
         self.production = os.environ.get("BITNOB_PRODUCTION")
+        self.base_url = os.environ.get("BITNOB_BASE_URL")
         if self.api_key is None:
             raise BitnobBadKeyError()
-        if self.production is None or self.production == True:
-            self.base_url = self.BITNOB_LIVE_URL
-        else:
-            self.base_url = self.BITNOB_SANDBOX_URL
+        backupUrl = (
+           self.BITNOB_SANDBOX_URL if self.production is False else self.BITNOB_LIVE_URL
+        )
+        getattr(self, "base_url", backupUrl)
 
     def send_request(self, method, path, **kwargs):
         """

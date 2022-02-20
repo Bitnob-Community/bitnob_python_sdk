@@ -3,7 +3,7 @@ from .customer import Customer
 from .onchain import Onchain
 from .wallet import Wallet
 from .virtual_card import VirtualCard
-from .usdc import USDC
+from .stablecoins import USDC, USDT
 from .swap import Swap
 from .hosted_checkout import HostedCheckout
-from .base import webhook_verification
+from .base import webhook_authenication

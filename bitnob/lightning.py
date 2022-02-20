@@ -1,4 +1,4 @@
-from bitnob.base import Bitnob
+from bitnob.base import Bitnob, pagination_filter
 
 
 class Lightning(Bitnob): 
@@ -75,3 +75,14 @@ class Lightning(Bitnob):
         """
         body = {"id" : invoice_id}
         return self.send_request("POST", "/wallets/ln/getinvoice", json=body)
+    
+    def list_invoices(self, **kwargs):
+        """
+        Getting addresses attached to company
+
+        - POST Request
+        """
+        url_params = None
+        if kwargs != {}:
+            url_params = pagination_filter(**kwargs)
+        return self.send_request("GET", f"/wallets/ln/getinvoices/?{url_params}",)

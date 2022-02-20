@@ -30,5 +30,5 @@ class Wallet(Bitnob):
         """
         url_params = None
         if kwargs != {}:
-            url_params = pagination_filter(kwargs=kwargs)
+            url_params = pagination_filter(**kwargs)
         return self.send_request("GET", f"/transactions/?{url_params}")
