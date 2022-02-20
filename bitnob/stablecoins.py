@@ -89,7 +89,7 @@ class USDC(StableCoin, Bitnob):
         required_data = ["amount", "address", "chain"]
         self.check_required_datas(required_data, body)
 
-        response = self.send_request("POST", "/wallets/send-usdc", json=body)
+        response = self.send_request("POST", "wallets/send-usdc", json=body)
         return self.generate_receipt_object(data=response["data"])
 
 
@@ -108,7 +108,7 @@ class USDC(StableCoin, Bitnob):
         required_data = ["customerEmail", "chain"]
         self.check_required_datas(required_data, body)
 
-        response =  self.send_request("POST", "/addresses/generate/usdc", json=body)
+        response =  self.send_request("POST", "addresses/generate/usdc", json=body)
         return self.generate_address_object(data=response["data"])
 
 class USDT(StableCoin, Bitnob): 
@@ -129,7 +129,7 @@ class USDT(StableCoin, Bitnob):
         required_data = ["amount", "address", "chain"]
         self.check_required_datas(required_data, body)
 
-        response = self.send_request("POST", "/wallets/send-usdt", json=body)
+        response = self.send_request("POST", "wallets/send-usdt", json=body)
         return self.generate_receipt_object(data=response["data"])
 
     def generate_address(self, body:dict):
@@ -147,5 +147,5 @@ class USDT(StableCoin, Bitnob):
         required_data = ["customerEmail", "chain"]
         self.check_required_datas(required_data, body)
 
-        response =  self.send_request("POST", "/addresses/generate/usdt", json=body)
+        response =  self.send_request("POST", "addresses/generate/usdt", json=body)
         return self.generate_address_object(data=response["data"])

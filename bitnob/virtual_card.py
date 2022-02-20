@@ -26,7 +26,7 @@ class VirtualCard(Bitnob):
         required_data = ["customerEmail", "idNumber", "idNumber", "firstName", "lastName", "city", "state", "country", "zipCode", "line1"]
         self.check_required_datas(required_data, body)
         
-        return self.send_request("POST", "/virtualcards/registercarduser", json=body)
+        return self.send_request("POST", "virtualcards/registercarduser", json=body)
     
     def create_card(self, email:str):
         """
@@ -37,7 +37,7 @@ class VirtualCard(Bitnob):
         body = {
             "email" : email
         }
-        return self.send_request("POST", "/virtualcards/create", json=body)
+        return self.send_request("POST", "virtualcards/create", json=body)
     
     def top_up(self, body:dict):
         """
@@ -48,7 +48,7 @@ class VirtualCard(Bitnob):
             amount: 1000
         }
         """
-        return self.send_request("POST", "/virtualcards/credit", json=body)
+        return self.send_request("POST", "virtualcards/credit", json=body)
 
     def withdraw(self, body:dict):
         """
@@ -60,7 +60,7 @@ class VirtualCard(Bitnob):
             amount: 1000
         }
         """
-        return self.send_request("POST", "/virtualcards/withdraw", json=body)
+        return self.send_request("POST", "virtualcards/withdraw", json=body)
     
     def mock_transaction(self, body:dict):
         """
@@ -71,7 +71,7 @@ class VirtualCard(Bitnob):
             type: deduct
         }
         """
-        return self.send_request("POST", "/virtualcards/mock-transaction", json=body)
+        return self.send_request("POST", "virtualcards/mock-transaction", json=body)
 
     def freeze_card(self, card_id:str):
         """
@@ -82,7 +82,7 @@ class VirtualCard(Bitnob):
         body = {
             "cardId" : card_id
         }
-        return self.send_request("POST", "/virtualcards/freeze", json=body)
+        return self.send_request("POST", "virtualcards/freeze", json=body)
     
     def unfreeze_card(self, card_id:str):
         """
@@ -93,7 +93,7 @@ class VirtualCard(Bitnob):
         body = {
             "cardId" : card_id
         }
-        return self.send_request("POST", "/virtualcards/unfreeze", json=body)
+        return self.send_request("POST", "virtualcards/unfreeze", json=body)
     
     def block_card(self, card_id:str):
         """
@@ -104,7 +104,7 @@ class VirtualCard(Bitnob):
         body = {
             "cardId" : card_id
         }
-        return self.send_request("POST", "/virtualcards/block", json=body)
+        return self.send_request("POST", "virtualcards/block", json=body)
     
     def unblock_card(self, card_id:str):
         """
@@ -115,7 +115,7 @@ class VirtualCard(Bitnob):
         body = {
             "cardId" : card_id
         }
-        return self.send_request("POST", "/virtualcards/unblock", json=body)
+        return self.send_request("POST", "virtualcards/unblock", json=body)
     
     def terminate_card(self, card_id:str):
         """
@@ -126,7 +126,7 @@ class VirtualCard(Bitnob):
         body = {
             "cardId" : card_id
         }
-        return self.send_request("POST", "/virtualcards/terminate", json=body)
+        return self.send_request("POST", "virtualcards/terminate", json=body)
     
 
 
@@ -143,7 +143,7 @@ class VirtualCard(Bitnob):
         url_params = None
         if kwargs != {}:
             url_params = pagination_filter(**kwargs)
-        return self.send_request("GET", f"/virtualcards/cards/?{url_params}")
+        return self.send_request("GET", f"virtualcards/cards/?{url_params}")
     
     def list_card_transactions(self, card_id, **kwargs):
         """
@@ -160,7 +160,7 @@ class VirtualCard(Bitnob):
         url_params = None
         if kwargs != {}:
             url_params = pagination_filter(**kwargs)
-        return self.send_request("GET", f"/virtualcards/cards/{card_id}/transactions/?{url_params}")
+        return self.send_request("GET", f"virtualcards/cards/{card_id}/transactions/?{url_params}")
     
     
     def list_transactions(self, **kwargs):
@@ -176,7 +176,7 @@ class VirtualCard(Bitnob):
         url_params = None
         if kwargs != {}:
             url_params = pagination_filter(**kwargs)
-        return self.send_request("GET", f"/virtualcards/cards/transactions/?{url_params}")
+        return self.send_request("GET", f"virtualcards/cards/transactions/?{url_params}")
 
     
     def get_card(self, card_id):
@@ -186,7 +186,7 @@ class VirtualCard(Bitnob):
 
         - GET Request
         """
-        return self.send_request("GET", f"/virtualcards/card/{card_id}")
+        return self.send_request("GET", f"virtualcards/card/{card_id}")
     
     
     def list_card_users(self, **kwargs):
@@ -202,4 +202,4 @@ class VirtualCard(Bitnob):
         url_params = None
         if kwargs != {}:
             url_params = pagination_filter(**kwargs)
-        return self.send_request("GET", f"/virtualcards/carusersds/?{url_params}")
+        return self.send_request("GET", f"virtualcards/carusersds/?{url_params}")

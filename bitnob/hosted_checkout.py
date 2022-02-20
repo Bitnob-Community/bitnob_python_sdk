@@ -22,7 +22,7 @@ class HostedCheckout(Bitnob):
         required_data =  ["amount", "description", "customerEmail", "notificationEmail", "callbackUrl", "successUrl", "reference"]
         self.check_required_datas(required_data, body)
         
-        return self.send_request("POST", "/checkout", json=body)
+        return self.send_request("POST", "checkout", json=body)
 
     def list_checkouts(self, **kwargs):
         """
@@ -37,7 +37,7 @@ class HostedCheckout(Bitnob):
         url_params = None
         if kwargs != {}:
             url_params = pagination_filter(**kwargs)
-        return self.send_request("GET", f"/checkout/?{url_params}")
+        return self.send_request("GET", f"checkout/?{url_params}")
     
     def get_checkout_status(self, checkout_id):
         """
@@ -45,7 +45,7 @@ class HostedCheckout(Bitnob):
 
         - GET Request
         """
-        return self.send_request("GET", f"/checkout/status/{checkout_id}")
+        return self.send_request("GET", f"checkout/status/{checkout_id}")
 
     def get_checkout_info(self, checkout_id):
         """
@@ -53,5 +53,5 @@ class HostedCheckout(Bitnob):
 
         - GET Request
         """
-        return self.send_request("GET", f"/checkout/info/{checkout_id}")
+        return self.send_request("GET", f"checkout/info/{checkout_id}")
     

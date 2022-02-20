@@ -23,7 +23,7 @@ class Lightning(Bitnob):
         required_data = ["description", "tokens", "customerEmail"]
         self.check_required_datas(required_data, body)
 
-        return self.send_request("POST", "/wallets/ln/createinvoice", json=body)
+        return self.send_request("POST", "wallets/ln/createinvoice", json=body)
 
     def pay_invoice(self, body:dict):
         """
@@ -41,7 +41,7 @@ class Lightning(Bitnob):
         required_data = ["request", "reference"]
         self.check_required_datas(required_data, body)
 
-        return self.send_request("POST", "/wallets/ln/pay", json=body)
+        return self.send_request("POST", "wallets/ln/pay", json=body)
     
     def initiate_payment(self, invoice_request):
         """
@@ -53,7 +53,7 @@ class Lightning(Bitnob):
         """
         
         body = {"request" : invoice_request}
-        return self.send_request("POST", "/wallets/ln/initiatepayment", json=body)
+        return self.send_request("POST", "wallets/ln/initiatepayment", json=body)
     
     def decode_payment_request(self, invoice_request):
         """
@@ -64,7 +64,7 @@ class Lightning(Bitnob):
         - POST Request
         """
         body = {"request" : invoice_request}
-        return self.send_request("POST", "/wallets/ln/decodepaymentrequest", json=body)
+        return self.send_request("POST", "wallets/ln/decodepaymentrequest", json=body)
     
     def get_invoice(self, invoice_id):
         """
@@ -74,7 +74,7 @@ class Lightning(Bitnob):
         - POST Request
         """
         body = {"id" : invoice_id}
-        return self.send_request("POST", "/wallets/ln/getinvoice", json=body)
+        return self.send_request("POST", "wallets/ln/getinvoice", json=body)
     
     def list_invoices(self, **kwargs):
         """

@@ -14,7 +14,7 @@ class Swap(Bitnob):
             "amount" : amount
         }
 
-        return self.send_request("POST", "/wallets/swap-bitcoin-usd", json=body)
+        return self.send_request("POST", "wallets/swap-bitcoin-usd", json=body)
     
     def swap_usd_to_btc(self, amount:int):
         """
@@ -27,4 +27,4 @@ class Swap(Bitnob):
             "amount" : amount
         }
 
-        return self.send_request("POST", "/wallets/swap-usd-bitcoin", json=body)
+        return self.send_request("POST", "wallets/swap-usd-bitcoin", json=body)

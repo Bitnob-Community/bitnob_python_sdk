@@ -8,7 +8,7 @@ class Wallet(Bitnob):
 
         - GET Request
         """
-        return self.send_request("GET", "/wallets")
+        return self.send_request("GET", "wallets")
 
     def get_transaction(self, transaction_id):
         """
@@ -31,4 +31,4 @@ class Wallet(Bitnob):
         url_params = None
         if kwargs != {}:
             url_params = pagination_filter(**kwargs)
-        return self.send_request("GET", f"/transactions/?{url_params}")
+        return self.send_request("GET", f"transactions/?{url_params}")

@@ -22,7 +22,7 @@ class Onchain(Bitnob):
         required_data = ["satoshis", "address", "customerEmail"]
         self.check_required_datas(required_data, body)
 
-        return self.send_request("POST", "/wallets/send_bitcoin", json=body)
+        return self.send_request("POST", "wallets/send_bitcoin", json=body)
 
     def generate_address(self, body:dict):
         """
@@ -38,7 +38,7 @@ class Onchain(Bitnob):
         required_data = ["customerEmail"]
         self.check_required_datas(required_data, body)
 
-        return self.send_request("POST", "/addresses/generate", json=body)
+        return self.send_request("POST", "addresses/generate", json=body)
     
     def list_addresses(self, **kwargs):
         """
@@ -52,4 +52,4 @@ class Onchain(Bitnob):
         return self.send_request("GET", f"/addresses/?{url_params}",)
     
     def get_recommeded_btc_fes(self):
-        return self.send_request("GET", "/recommended-fees/btc")
+        return self.send_request("GET", "recommended-fees/btc")
