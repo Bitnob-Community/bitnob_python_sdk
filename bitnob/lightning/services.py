@@ -1,7 +1,37 @@
 from bitnob.base import Bitnob, pagination_filter
+from bitnob.model import Invoice, Transaction
 
 
-class Lightning(Bitnob): 
+class Lightning(Bitnob):
+
+    def __generate_invoice_object(self, data):
+        return Invoice(
+            description = data.get("description"),
+            tokens=data.get("tokens"),
+            request=data.get("request")
+        )
+    
+    def __generate_transaction_object(self, data):
+        return Transaction(            
+            reference = data.get("reference"),
+            description = data.get("description"),
+            amount = data.get("amount"),
+            sat_amount = data.get("satAmount"),
+            fees = data.get("fees"),
+            btc_fees = data.get("btcFees"),
+            sat_fees = data.get("satFees"),
+            action = data.get("action"),
+            type = data.get("type"),
+            status = data.get("status"),
+            id=data.get("id"),
+            invoice_id=data.get("invoiceId"),
+            channel=data.get("channel"),
+            address=data.get("address"),
+            payment_request=data.get("paymentRequest"),
+            spot_price=data.get("spotPrice"),
+            hash=data.get("hash"),
+            confirmations=data.get("confirmations")
+        )
     
     def create_invoice(self, body:dict):
         """
@@ -23,7 +53,9 @@ class Lightning(Bitnob):
         required_data = ["description", "tokens", "customerEmail"]
         self.check_required_datas(required_data, body)
 
-        return self.send_request("POST", "wallets/ln/createinvoice", json=body)
+        response = self.send_request("POST", "wallets/ln/createinvoice", json=body)
+        return self.__generate_invoice_object(data=response["data"])
+
 
     def pay_invoice(self, body:dict):
         """
@@ -41,7 +73,8 @@ class Lightning(Bitnob):
         required_data = ["request", "reference"]
         self.check_required_datas(required_data, body)
 
-        return self.send_request("POST", "wallets/ln/pay", json=body)
+        response = self.send_request("POST", "wallets/ln/pay", json=body)
+        return self.__generate_transaction_object(data=response["data"])
     
     def initiate_payment(self, invoice_request):
         """

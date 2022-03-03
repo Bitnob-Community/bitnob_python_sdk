@@ -1,7 +1,18 @@
+from urllib import response
 from bitnob.base import Bitnob, pagination_filter
+from bitnob.virtual_card.model import VirtualCard
 
 
-class VirtualCard(Bitnob): 
+class VirtualCardApi(Bitnob):
+
+    def generate_virtual_card_object(self, data):
+        return VirtualCard(
+            id = data.get("id"),
+            card_number=data.get("card_number"),
+            cvv= data.get("cvv"),
+            balance=data.get("balance")
+        )
+
     
     def register_card_user(self, body:dict):
         """
@@ -37,7 +48,8 @@ class VirtualCard(Bitnob):
         body = {
             "email" : email
         }
-        return self.send_request("POST", "virtualcards/create", json=body)
+        response = self.send_request("POST", "virtualcards/create", json=body)
+        return self.generate_virtual_card_object(data=response["data"])
     
     def top_up(self, body:dict):
         """

@@ -1,41 +1,7 @@
 from bitnob.base import Bitnob
 from abc import ABC, abstractmethod
-
-
-
-class Address:
-    def __init__(self,address, address_type, label=None) -> None:
-        self.name = address
-        self.address_type = address_type
-        self.label = label
-
-class Receipt:
-    def __init__(self, id, reference, description, amount, centAmount, fees, centFees, action, type, status) -> None:
-        self.reference =reference
-        self.description = description
-        self.amount = amount
-        self.centAmount = centAmount
-        self.fees = fees
-        self.centFees = centFees
-        self.action = action
-        self.type = type
-        self.status = status
-        self.id=id
-    
-    @property
-    def total_amount(self):
-        """
-        Total amount debited from user
-        """
-        return self.amount + self.fees
-    
-    @property
-    def total_cents(self):
-        """
-        Total cents debited from user
-        """
-        return self.centAmount + self.centFees
-
+from bitnob.stablecoin.model import Receipt
+from bitnob.wallet.model import WalletAddress
 
 class StableCoin(ABC):
 
@@ -48,7 +14,7 @@ class StableCoin(ABC):
         pass
 
     def generate_address_object(self, data):
-        return Address(
+        return WalletAddress(
             address = data.get("address"),
             address_type=data.get("addressType"),
             label=data.get("label")
@@ -59,11 +25,9 @@ class StableCoin(ABC):
             reference = data.get("reference"),
             description = data.get("description"),
             amount = data.get("amount"),
-            centAmount = data.get("centAmount"),
             fees = data.get("fees"),
-            centFees = data.get("centFees"),
             action = data.get("action"),
-            type = data.get("type"),
+            receipt_type = data.get("type"),
             status = data.get("status"),
             id=data.get("id")
         )
