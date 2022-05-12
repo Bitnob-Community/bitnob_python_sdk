@@ -4,7 +4,7 @@ from .model import User
 
 class Customer(Bitnob): 
 
-    def __generate_user_object(data):
+    def __generate_user_object(self, data):
         return User(id=data["id"], 
                         email=data["email"], 
                         firstName=data["firstName"], 
@@ -48,7 +48,7 @@ class Customer(Bitnob):
         if kwargs != {}:
             url_params = pagination_filter(kwargs=kwargs)
         response = self.send_request("GET", f"customers/?{url_params}")
-        data = response.get("data")
+        data = response["data"]["customers"]
         return [self.__generate_user_object(user_data) for user_data in data]
 
     

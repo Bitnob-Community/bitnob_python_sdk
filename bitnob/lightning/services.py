@@ -1,5 +1,6 @@
 from bitnob.base import Bitnob, pagination_filter
-from bitnob.model import Invoice, Transaction
+from .model import Invoice
+from bitnob.wallet.model import Transaction
 
 
 class Lightning(Bitnob):

@@ -16,7 +16,7 @@ class Bitnob():
 
     def __init__(self):
         self.BITNOB_LIVE_URL = 'https://api.bitnob.co/api/v1/'
-        self.BITNOB_SANDBOX_URL = 'https://staging-api.flowertop.xyz/api/v1/'
+        self.BITNOB_SANDBOX_URL = 'https://sandboxapi.bitnob.co/api/v1/'
         self.api_key = os.environ.get("BITNOB_API_KEY")
         self.production = os.environ.get("BITNOB_PRODUCTION")
         self.base_url = os.environ.get("BITNOB_BASE_URL")
