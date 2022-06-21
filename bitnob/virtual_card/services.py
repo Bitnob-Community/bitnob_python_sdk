@@ -14,13 +14,16 @@ class VirtualCardClient(Bitnob):
             cardType = data.get("cardType"),
             expiry = data.get("expiry"),
             status = data.get("status"),
-            valid = data.get("valid")
+            valid = data.get("valid"), 
+            last4=data.get("last4"),
+            blocked=data.get("blocked"),
+            frozen=data.get("frozen"),
         )
     
     def __generate_card_trans_object(self, data):
         return VirtualCardTransaction(
             id = data.get("id"),
-            card_id = data.get("cardId"),
+            cardId = data.get("cardId"),
             amount = data.get("amount"),
             centAmount = data.get("centAmount"),
             type = data.get("type"),
@@ -99,7 +102,7 @@ class VirtualCardClient(Bitnob):
             amount: 1000
         }
         """
-        response = self.send_request("POST", "virtualcards/credit", json=body)
+        response = self.send_request("POST", "virtualcards/top_up", json=body)
         return self.__generate_card_trans_object(data=response["data"])        
 
     def withdraw(self, body:dict):
@@ -200,7 +203,7 @@ class VirtualCardClient(Bitnob):
             url_params = pagination_filter(**kwargs)
         response = self.send_request("GET", f"virtualcards/cards/?{url_params}")
         data = response["data"]["cards"]
-        return [self.__generate_user_object(card_data) for card_data in data]
+        return [self.__generate_virtual_card_object(card_data) for card_data in data]
     
     def list_card_transactions(self, card_id, **kwargs):
         """
@@ -219,7 +222,7 @@ class VirtualCardClient(Bitnob):
             url_params = pagination_filter(**kwargs)
         response = self.send_request("GET", f"virtualcards/cards/{card_id}/transactions/?{url_params}")
         data = response["data"]["cardTransactions"]
-        return [self.__generate_user_object(card_transactions) for card_transactions in data]
+        return [self.__generate_card_trans_object(card_transactions) for card_transactions in data]
     
     def list_transactions(self, **kwargs):
         """
@@ -236,7 +239,7 @@ class VirtualCardClient(Bitnob):
             url_params = pagination_filter(**kwargs)
         response = self.send_request("GET", f"virtualcards/cards/transactions/?{url_params}")
         data = response["data"]["cardTransactions"]
-        return [self.__generate_user_object(card_transactions) for card_transactions in data]
+        return [self.__generate_card_trans_object(card_transactions) for card_transactions in data]
 
     def get_card(self, card_id):
         """
@@ -263,4 +266,4 @@ class VirtualCardClient(Bitnob):
             url_params = pagination_filter(**kwargs)
         response = self.send_request("GET", f"virtualcards/carusersds/?{url_params}")
         data = response["data"]["cardUsers"]
-        return [self.__generate_user_object(card_users) for card_users in data]
+        return [self.__generate_card_user_object(card_users) for card_users in data]

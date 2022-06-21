@@ -18,7 +18,7 @@ class Checkout:
 
     def __init__(self, id, reference, amount,  
                 sat_amount, sat_amount_paid, expires_at,
-                lightning_expires_at, status, callback_url, success_url, 
+                lightning_expires_at, status, callback_url, success_url, checkout_type,
                 description, address, lightning, companyName, companyLogo, customer) -> None:
         self.id = id
         self.reference = reference
@@ -28,7 +28,7 @@ class Checkout:
         self.expires_at = expires_at
         self.sat_amount = sat_amount
         self.callback_url = callback_url
-        self.type = type
+        self.checkout_type = checkout_type
         self.status = status
         self.success_url = success_url
         self.description = description

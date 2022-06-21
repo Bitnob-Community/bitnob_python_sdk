@@ -22,7 +22,7 @@ class Lightning(Bitnob):
             btc_fees = data.get("btcFees"),
             sat_fees = data.get("satFees"),
             action = data.get("action"),
-            type = data.get("type"),
+            transaction_type = data.get("type"),
             status = data.get("status"),
             id=data.get("id"),
             invoice_id=data.get("invoiceId"),

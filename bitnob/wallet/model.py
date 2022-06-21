@@ -8,7 +8,7 @@ class Transaction:
     def __init__(self, id, reference, amount, 
                 fees, btc_fees, sat_fees, 
                 sat_amount, spot_price, action,
-                type, status, channel, payment_request, 
+                transaction_type, status, channel, payment_request, 
                 description, address, hash,
                 confirmations, invoiceId) -> None:
         self.id = id
@@ -19,7 +19,7 @@ class Transaction:
         self.sat_fees = sat_fees
         self.sat_amount = sat_amount
         self.spot_price = spot_price
-        self.type = type
+        self.transaction_type = transaction_type
         self.status = status
         self.channel = channel
         self.action = action

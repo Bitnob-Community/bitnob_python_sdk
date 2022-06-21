@@ -14,7 +14,7 @@ class HostedCheckout(Bitnob):
             expires_at = data["expires_at"],
             sat_amount = data["sat_amount"],
             callback_url = data["callback_url"],
-            type = data["type"],
+            checkout_type = data["type"],
             status = data["status"],
             success_url = data["success_url"],
             description = data["description"],
