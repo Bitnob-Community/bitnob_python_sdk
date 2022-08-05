@@ -1,12 +1,14 @@
 class VirtualCard:
     def __init__(self, id, balance, cardNumber, 
                     cvv, cardName, cardType, expiry, 
-                    status, valid, last4, blocked, frozen) -> None:
+                    status, valid, last4, blocked, frozen,
+                    cardBranch) -> None:
         self.id = id
         self.balance = balance
         self.card_number = cardNumber
         self.card_name = cardName
         self.card_type = cardType
+        self.card_branch = cardBranch
         self.expiry = expiry
         self.status = status
         self.valid = valid

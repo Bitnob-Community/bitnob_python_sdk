@@ -8,6 +8,8 @@ class VirtualCardClient(Bitnob):
         return VirtualCard(
             id = data.get("id"),
             cardNumber=data.get("cardNumber"),
+            cardType=data.get("cardType"),
+            cardBranch=data.get("cardBranch"),
             cvv= data.get("cvv2"),
             balance=data.get("balance"),
             cardName = data.get("cardName"),
@@ -81,15 +83,12 @@ class VirtualCardClient(Bitnob):
         response = self.send_request("POST", "virtualcards/registercarduser", json=body)
         return self.__generate_card_user_object(data=response["data"])
         
-    def create_card(self, email:str):
+    def create_card(self, body:dict):
         """
         Create Card for customer
 
         email = customer@gmail.com
         """
-        body = {
-            "customerEmail" : email
-        }
         response = self.send_request("POST", "virtualcards/create", json=body)
         return self.__generate_virtual_card_object(data=response["data"])
     
@@ -102,7 +101,7 @@ class VirtualCardClient(Bitnob):
             amount: 1000
         }
         """
-        response = self.send_request("POST", "virtualcards/top_up", json=body)
+        response = self.send_request("POST", "virtualcards/topup", json=body)
         return self.__generate_card_trans_object(data=response["data"])        
 
     def withdraw(self, body:dict):
