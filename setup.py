@@ -8,7 +8,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="bitnob",
-    version="1.2.3",
+    version="1.2.4",
     description="Python SDK for the Bitnob\"s API",
     long_description=README,
     long_description_content_type="text/markdown",

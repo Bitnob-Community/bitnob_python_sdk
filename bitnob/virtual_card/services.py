@@ -8,8 +8,7 @@ class VirtualCardClient(Bitnob):
         return VirtualCard(
             id = data.get("id"),
             cardNumber=data.get("cardNumber"),
-            cardType=data.get("cardType"),
-            cardBranch=data.get("cardBranch"),
+            cardBrand=data.get("cardBrand"),
             cvv= data.get("cvv2"),
             balance=data.get("balance"),
             cardName = data.get("cardName"),
