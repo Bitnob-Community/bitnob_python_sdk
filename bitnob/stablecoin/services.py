@@ -102,7 +102,7 @@ class USDT(StableCoin, Bitnob):
 
         body = {
             "label": "purchase xbox",
-            "customerEmail": "customer@gmail.com"
+            "customerEmail": "customer@gmail.com",
             "chain": "BSC"
         }
 
