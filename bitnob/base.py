@@ -19,13 +19,15 @@ class Bitnob():
         self.BITNOB_SANDBOX_URL = 'https://sandboxapi.bitnob.co/api/v1/'
         self.api_key = os.environ.get("BITNOB_API_KEY")
         self.production = os.environ.get("BITNOB_PRODUCTION")
-        self.base_url = os.environ.get("BITNOB_BASE_URL")
+        
         if self.api_key is None:
             raise BitnobBadKeyError()
         backupUrl = (
-           self.BITNOB_SANDBOX_URL if self.production is False else self.BITNOB_LIVE_URL
+           self.BITNOB_SANDBOX_URL if self.production.lower() is False else self.BITNOB_LIVE_URL
         )
-        getattr(self, "base_url", backupUrl)
+        self.base_url = os.environ.get("BITNOB_BASE_URL") or backupUrl
+        setattr(self, "base_url", self.base_url)
+
 
     def send_request(self, method, path, **kwargs):
         """
